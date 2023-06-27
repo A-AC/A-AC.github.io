@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Robot Arm</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="robot-arm">
+    <div class="link-container">
+      <div class="joint"></div>
+      <div class="link"></div>
+    </div>
+    <div class="link-container">
+      <div class="joint"></div>
+      <div class="link"></div>
+    </div>
+    <div class="link-container">
+      <div class="joint"></div>
+      <div class="link"></div>
+    </div>
+    <div class="link-container">
+      <div class="joint"></div>
+      <div class="link"></div>
+      <div class="end-effector"></div>
+    </div>
+  </div>
+
+  <input type="range" id="joint-angle-slider" min="-180" max="180" value="0" step="1">
+
+  <script src="script.js"></script>
+</body>
+</html>

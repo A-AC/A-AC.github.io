@@ -1,0 +1,47 @@
+.robot-arm{
+    width: 500px;
+    height: 500px;
+}
+
+.link-container {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .joint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    border-radius: 50%;
+  }
+  
+  .link {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0% 0%;
+    width: 120%;
+    height: 20px;
+    background-color: gray;
+    transform: translate(0%, -50%);
+  }
+  
+  .end-effector {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 50%;
+  }
+
+#joint-angle-slider{
+    position: relative;
+}
