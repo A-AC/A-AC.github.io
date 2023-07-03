@@ -1,0 +1,13 @@
+.project-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .project-date {
+    font-weight: bold;
+    color: #777777;
+  }
