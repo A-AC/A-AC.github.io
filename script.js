@@ -4,8 +4,8 @@ const robotArm = document.querySelector('.robot-arm');
 const linkContainers = document.querySelectorAll('.link-container')
 const endEffector = document.querySelector('.end-effector');
 
-  // Define the initial joint angles
-  const initialAngles = [0, 0, 0, 0];
+// Define the initial joint angles
+const initialAngles = [0, 0, 0, 0];
 
 // Function to update the rotation of the robot arm
 function updateRotation(mouseX, mouseY) {
@@ -51,8 +51,8 @@ function updateRotation(mouseX, mouseY) {
 
 }
 
-  // Function to calculate the angle of a joint
-  function calculateJointAngle(index) {
+// Function to calculate the angle of a joint
+function calculateJointAngle(index) {
     let angle = 0;
     for (let i = 0; i <= index; i++) {
       angle += initialAngles[i];
@@ -60,8 +60,8 @@ function updateRotation(mouseX, mouseY) {
     return angle;
   }
   
-    // Update the position and rotation of the robot arm
-    updateRotation();
+// Update the position and rotation of the robot arm
+updateRotation();
 
 // Event listener to track mouse movement and update joint angles
 robotArm.addEventListener('mousemove', (event) => {
