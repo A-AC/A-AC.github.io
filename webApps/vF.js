@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const photo = document.getElementById("photo");
     const downloadLink = document.getElementById("downloadLink");
 
+    let isFilterApplied = false;
+
     fileInput.addEventListener("change", async (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -14,12 +16,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Wait for the image to load before applying the filter
             photo.onload = async () => {
-                console.log("Image loaded");
-                await applyFilter(photo);
+                if (!isFilterApplied) {
+                    console.log("Image loaded");
+                    await applyFilter(photo);
+                    isFilterApplied = true;  // Mark the filter as applied
+                }
             };
 
             // Handle errors in loading image
             photo.onerror = () => {
+                alert("Error loading image!");
                 console.log("Error loading image");
             };
         }
@@ -64,9 +70,11 @@ async function applyFilter(imgElement) {
         // Set the processed image to the img element
         imgElement.src = processedImageUrl;
 
+        alert("Wroked!")
         // Enable the download link
         downloadLink.href = processedImageUrl;
         downloadLink.style.display = "inline-block";
+        alert("Wow!")
     } else {
         console.log("Image is not loaded properly or not ready yet");
         imgElement.onload = async () => {
