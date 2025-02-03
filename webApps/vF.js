@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.getElementById("fileInput");
     const photo = document.getElementById("photo");
+    const downloadLink = document.getElementById("downloadLink");
 
     fileInput.addEventListener("change", async (event) => {
         const file = event.target.files[0];
@@ -8,6 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const imageUrl = URL.createObjectURL(file);
             photo.src = imageUrl;
             photo.style.display = "block";
+            downloadLink.style.display = "none";  // Hide download link initially
+
 
             // Wait for the image to load before applying the filter
             photo.onload = async () => {
@@ -60,6 +63,10 @@ async function applyFilter(imgElement) {
 
         // Set the processed image to the img element
         imgElement.src = processedImageUrl;
+
+        // Enable the download link
+        downloadLink.href = processedImageUrl;
+        downloadLink.style.display = "inline-block";
     } else {
         console.log("Image is not loaded properly or not ready yet");
         imgElement.onload = async () => {
