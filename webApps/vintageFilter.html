@@ -11,34 +11,25 @@
 <body>
     <h2 style="text-align: center;">Upload and Display Image</h2>
     <div style="text-align: center;">
-        <input type="file" id="fileInput" accept="image/png">
+        <input type="file" id="fileInput" accept="image/heif, image/heic">
         <br>
-        <canvas id="canvas" width="320" height="240" style="display: none;"></canvas>
         <img id="photo" alt="Uploaded Image" width="320" height="240" style="display: none;">
     </div>
     
     <script>
-        document.getElementById('fileInput').addEventListener('change', function(event) {
+        document.getElementById('fileInput').addEventListener('change', async function(event) {
             const file = event.target.files[0];
-            if (file && file.type === 'image/png') {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        const canvas = document.getElementById('canvas');
-                        const ctx = canvas.getContext('2d');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        ctx.drawImage(img, 0, 0);
-                        const photo = document.getElementById('photo');
-                        photo.src = canvas.toDataURL('image/png');
-                        photo.style.display = 'block';
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+            if (file && (file.type === 'image/heif' || file.type === 'image/heic')) {
+                try {
+                    const blobURL = URL.createObjectURL(file);
+                    const photo = document.getElementById('photo');
+                    photo.src = blobURL;
+                    photo.style.display = 'block';
+                } catch (error) {
+                    alert('Your browser may not support HEIF/HEIC images. Please convert to a compatible format.');
+                }
             } else {
-                alert('Please upload a PNG image for best quality.');
+                alert('Please upload a HEIF or HEIC image for best quality.');
             }
         });
     </script>
