@@ -55,7 +55,7 @@ async function applyFilter(imgElement) {
         ctx.putImageData(imageData, 0, 0);
 
         // Convert canvas content to JPG format
-        const processedImageUrl = canvas.toDataURL():
+        const processedImageUrl = canvas.toDataURL();
         console.log("Processed image URL:", processedImageUrl);
 
         // Set the processed image to the img element
