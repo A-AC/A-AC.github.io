@@ -9,8 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
             photo.src = imageUrl;
             photo.style.display = "block";
 
-            // Process the image if needed
-            await applyFilter(photo);
+            // Wait for the image to load before applying the filter
+            photo.onload = async () => {
+                console.log("Image loaded");
+                await applyFilter(photo);
+            };
+
+            // Handle errors in loading image
+            photo.onerror = () => {
+                console.log("Error loading image");
+            };
         }
     });
 });
@@ -20,24 +28,42 @@ document.addEventListener("DOMContentLoaded", () => {
  * @param {HTMLImageElement} imgElement 
  */
 async function applyFilter(imgElement) {
+    console.log("Applying filter...");
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
-    canvas.width = imgElement.width;
-    canvas.height = imgElement.height;
-    ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
+    // Ensure the image is fully loaded and has dimensions
+    if (imgElement.complete && imgElement.naturalWidth !== 0) {
+        canvas.width = imgElement.naturalWidth;  // Use natural dimensions of the image
+        canvas.height = imgElement.naturalHeight;
+        console.log(`Canvas dimensions: ${canvas.width} x ${canvas.height}`);
 
-    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let data = imageData.data;
+        // Draw the image onto the canvas
+        ctx.drawImage(imgElement, 0, 0, canvas.width, canvas.height);
 
-    // Apply grayscale filter
-    for (let i = 0; i < data.length; i += 4) {
-        let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-        data[i] = data[i + 1] = data[i + 2] = avg;
+        // Get the image data from the canvas
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        let data = imageData.data;
+
+        // Apply grayscale filter
+        for (let i = 0; i < data.length; i += 4) {
+            let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+            data[i] = data[i + 1] = data[i + 2] = avg;
+        }
+
+        // Put the updated image data back onto the canvas
+        ctx.putImageData(imageData, 0, 0);
+
+        // Convert canvas content to JPG format
+        const processedImageUrl = canvas.toDataURL();
+        console.log("Processed image URL:", processedImageUrl);
+
+        // Set the processed image to the img element
+        imgElement.src = processedImageUrl;
+    } else {
+        console.log("Image is not loaded properly or not ready yet");
+        imgElement.onload = async () => {
+            await applyFilter(imgElement);
+        };
     }
-
-    ctx.putImageData(imageData, 0, 0);
-    
-    // Update the image with the processed version
-    imgElement.src = canvas.toDataURL();
 }
