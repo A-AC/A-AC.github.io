@@ -15,23 +15,8 @@
         <br>
         <img id="photo" alt="Uploaded Image" width="320" height="240" style="display: none;">
     </div>
-    
-    <script>
-        document.getElementById('fileInput').addEventListener('change', async function(event) {
-            const file = event.target.files[0];
-            if (file && (file.type === 'image/heif' || file.type === 'image/heic')) {
-                try {
-                    const blobURL = URL.createObjectURL(file);
-                    const photo = document.getElementById('photo');
-                    photo.src = blobURL;
-                    photo.style.display = 'block';
-                } catch (error) {
-                    alert('Your browser may not support HEIF/HEIC images. Please convert to a compatible format.');
-                }
-            } else {
-                alert('Please upload a HEIF or HEIC image for best quality.');
-            }
-        });
-    </script>
+
+    <!-- Load script at the end to ensure DOM elements are ready -->
+    <script src="vF.js"></script>
 </body>
 </html>
