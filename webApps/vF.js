@@ -11,10 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
             photo.style.display = "block";
             downloadLink.style.display = "none";  // Hide download link initially
 
+            // Set the download link file name based on the original file type
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            const fileNameWithoutExtension = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
+
             // Wait for the image to load before applying the filter
             photo.onload = async () => {
                 console.log("Image loaded");
-                await applyFilter(photo);
+                await applyFilter(photo, fileExtension, fileNameWithoutExtension);
             };
 
             // Handle errors in loading image
@@ -25,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-async function applyFilter(imgElement) {
+async function applyFilter(imgElement, fileExtension, fileNameWithoutExtension) {
     console.log("Applying filter...");
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -59,8 +63,10 @@ async function applyFilter(imgElement) {
         // Set the processed image to the img element
         imgElement.src = processedImageUrl;
 
-        // Enable the download link
+        // Set the correct download link based on file type
+        const downloadExtension = fileExtension === "heif" || fileExtension === "heic" ? "heif" : "jpg";
         downloadLink.href = processedImageUrl;
+        downloadLink.download = `${fileNameWithoutExtension}.${downloadExtension}`;
         downloadLink.style.display = "inline-block";
     } else {
         console.log("Image is not loaded properly or not ready yet");
