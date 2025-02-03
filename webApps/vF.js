@@ -64,17 +64,15 @@ async function applyFilter(imgElement) {
         ctx.putImageData(imageData, 0, 0);
 
         // Convert canvas content to JPG format
-        const processedImageUrl = canvas.toDataURL();
+        const processedImageUrl = canvas.toDataURL("img.jpg");
         console.log("Processed image URL:", processedImageUrl);
 
         // Set the processed image to the img element
         imgElement.src = processedImageUrl;
 
-        alert("Wroked!")
         // Enable the download link
         downloadLink.href = processedImageUrl;
         downloadLink.style.display = "inline-block";
-        alert("Wow!")
     } else {
         console.log("Image is not loaded properly or not ready yet");
         imgElement.onload = async () => {
