@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const filterC = document.getElementById("filterC");
     const exposureS = document.getElementById("exposureS")
     const noiseIntenseS = document.getElementById("noiseIntenseS")
+    const highlightsS = document.getElementById("highlightsS")
+    const shadowsS = document.getElementById("shadowsS")
 
     let isFilterApplied = false;
 
@@ -37,15 +39,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     filterC.addEventListener("change", async (event)=>{
-        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 
     exposureS.addEventListener("change", async (event)=>{
-        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 
     noiseIntenseS.addEventListener("change", async (event)=>{
-        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+    });
+
+    highlightsS.addEventListener("change", async (event)=>{
+        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+    });
+
+    shadowsS.addEventListener("change", async (event)=>{
+        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 });
 
@@ -56,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * Apply exposure filter to the uploaded image
  * @param {HTMLImageElement} imgElement 
  */
-async function render(originaElement, imgElement, exposureV, filter, noiseIntenseV) {
+async function render(originaElement, imgElement, exposureV, filter, noiseIntenseV, highlightsV, shadowsV) {
     console.log("Mod Exposure");
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -98,10 +108,21 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
                 break;
 
             case "noise":
+                noiseIntenseV = 100;
+                noiseIntenseS.value = 100;
+                exposureV = 10;
+                exposureS.value = 10;
+                break;
+
+            case "crazy":
                 for (let i = 0; i < data.length; i += 4) {
-                    data[i] = data[i] - Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2;
-                    data[i+1] = data[i+1] - Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2;
-                    data[i+2] = data[i+2] - Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2;
+                    if (data[i] > data[i+1] && data[i] > data[i+2]){
+                        data[i + 1] = data[i + 2] = 0;
+                    } else if (data[i+1] > data[i] && data[i+1] > data[i+2]){
+                        data[i] = data[i + 2] = 0;
+                    } else if (data[i+2] > data[i] && data[i+2] > data[i+1]){
+                        data[i] = data[i + 1] = 0;
+                    }
                 }
                 break;
 
@@ -109,8 +130,9 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
                 data = imageData.data;
         }
 
-        // Exposure
+        // render
         for (let i = 0; i < data.length; i += 4) {
+            let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
             data[i] = data[i] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
             data[i+1] = data[i+1] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
             data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
