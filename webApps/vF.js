@@ -111,9 +111,9 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
 
         // Exposure
         for (let i = 0; i < data.length; i += 4) {
-            data[i] = data[i] - (-exposureV + (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
-            data[i+1] = data[i+1] - (-exposureV + (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
-            data[i+2] = data[i+2] - (-exposureV + (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
+            data[i] = data[i] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
+            data[i+1] = data[i+1] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
+            data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
         }
         console.log(data);
 
