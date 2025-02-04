@@ -3,12 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#db4938">
+    <meta name="theme-color" content="#db4938">
     <title>Upload and Display Image</title>
     <style>
         img { display: block; margin: 10px auto; border: 1px solid #000; }
     </style>
 </head>
 <body>
+    <!--script type="module">
+        import {Workbox} from 'https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-window.prod.mjs';
+    
+        /*if ('serviceWorker' in navigator) {
+            const wb = new Workbox('/sw.js');
+    
+            wb.register();
+        }*/
+    </script-->
     <h2 style="text-align: center;">Upload and Display Image</h2>
     <div style="text-align: center;">
         <input type="file" id="fileInput" accept="image/*">
@@ -20,7 +34,8 @@
             <option value="red">Red</option>
             <option value="green">Green</option>
             <option value="blue">Blue</option>
-            <option value="filter1">Exp1</option>
+            <option value="noise">Noise (Preset)</option>
+            <option value="crazy">crazy</option>
         </select>
 
         <br>
@@ -35,6 +50,17 @@
             <input type="range" min="0" max="150" value="0" class="slider" id="noiseIntenseS">
         </div>
 
+        <div class="slidecontainer">
+            <label for="highlights">Highlights:</label>
+            <input type="range" min="-150" max="150" value="0" class="slider" id="highlightsS">
+        </div>
+
+        <div class="slidecontainer">
+            <label for="shadows">Shadows:</label>
+            <input type="range" min="150" max="150" value="0" class="slider" id="shadowsS">
+        </div>
+
+
         <br>
         <a id="downloadLink" href="#" style="display: none;">Download Image</a>
         </div>
@@ -47,5 +73,12 @@
     <!-- Load script at the end to ensure DOM elements are ready -->
     <!--script src="https://cdn.jsdelivr.net/npm/libheif-js@1.17.1/libheif/libheif.js"></script-->
     <script src="vF.js"></script>
+    <script>
+        if (!navigator.serviceWorker.controller) {
+            navigator.serviceWorker.register("/webApps/serviceWorker.js").then(function(reg) {
+                console.log("Service worker has been registered for scope: " + reg.scope);
+            });
+        }
+    </script>
 </body>
 </html>
