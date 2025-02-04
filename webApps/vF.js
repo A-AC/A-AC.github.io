@@ -57,15 +57,46 @@ async function applyFilter(originaElement, imgElement, filter) {
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
 
-
+        // R G B A (0-255)
+        console.log("FilterId: ", filter);
         switch (filter){
             case "BN":
                 for (let i = 0; i < data.length; i += 4) {
                     let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
                     data[i] = data[i + 1] = data[i + 2] = avg;
                 }
+                break;
+
+            case "red":
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i + 1] = data[i + 2] = 0;
+                }
+                break;
+
+            case "blue":
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = data[i + 1] = 0;
+                }
+                break;
+
+            case "green":
+                for (let i = 0; i < data.length; i += 4) {
+                    data[i] = data[i + 2] = 0;
+                }
+                break;
+
+            case "filter1":
+                for (let i = 0; i < data.length; i += 4) {
+                    let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    data[i] = data[i + 1] = data[i + 2] = avg;
+                }
+                break;
+
             default:
                 data = imageData.data;
+
+            console.log(data);
+            console.log(imageData);
         }
         ctx.putImageData(imageData, 0, 0);
 
@@ -74,7 +105,6 @@ async function applyFilter(originaElement, imgElement, filter) {
             if (blob) {
                 const blobUrl = URL.createObjectURL(blob);
                 console.log("Blob URL:", blobUrl);
-                console.log("Filter:", filter);
 
                 // Set the processed image to the img element
                 imgElement.src = blobUrl;
