@@ -8,7 +8,7 @@
     "orientation": "portrait-primary",
     "icons": [
         {
-            "src": "/icon.png",
+            "src": "/webApps/icon.png",
             "type": "image/png", "sizes": "800x800"
         }
 
