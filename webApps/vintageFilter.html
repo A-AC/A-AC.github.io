@@ -12,10 +12,17 @@
     <h2 style="text-align: center;">Upload and Display Image</h2>
     <div style="text-align: center;">
         <input type="file" id="fileInput" accept="image/*">
+        <label for="filter">Choose a filter:</label>
+
+        <select name="Filter" id="filterC">
+            <option value="NONE">No Filter</option>
+            <option value="BN">B, W</option>
+        </select>
         <a id="downloadLink" href="#" style="display: none;">Download Image</a>
         </div>
         <br>
         <img id="photo" alt="Uploaded Image" style="display: none;">
+        <img id="originalPhoto" alt="Uploaded Image" style="display: none;">
         
     
 
