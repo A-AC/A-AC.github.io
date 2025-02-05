@@ -1,10 +1,10 @@
 {
-    "name": "Filter App",
-    "short_name": "FApp",
+    "name": "Xolo Photo Editor",
+    "short_name": "XPhoto",
     "start_url": "vintageFilter.html",
     "display": "standalone",
-    "background_color": "#fdfdfd",
-    "theme_color": "#db4938",
+    "background_color": "#141414",
+    "theme_color": "#141414",
     "orientation": "portrait-primary",
     "icons": [
         {

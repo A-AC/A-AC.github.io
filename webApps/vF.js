@@ -4,10 +4,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const originalPh = document.getElementById("originalPhoto");
     const downloadLink = document.getElementById("downloadLink");
     const filterC = document.getElementById("filterC");
-    const exposureS = document.getElementById("exposureS")
-    const noiseIntenseS = document.getElementById("noiseIntenseS")
-    const highlightsS = document.getElementById("highlightsS")
-    const shadowsS = document.getElementById("shadowsS")
+
+    const exposureS = document.getElementById("exposureS");
+    const noiseIntenseS = document.getElementById("noiseIntenseS");
+    const highlightsS = document.getElementById("highlightsS");
+    const shadowsS = document.getElementById("shadowsS");
+
+    const exposureSContainer = document.getElementById("slidecontainerExposure");
+    const noiseIntenseSContainer = document.getElementById("slidecontainerNoiseIntense");
+    const highlightsSContainer = document.getElementById("slidecontainerHighlights");
+    const shadowsSContainer = document.getElementById("slidecontainerShadows");
+
+    const exposureC = document.getElementById("exposureC");
+    const noiseIntenseC = document.getElementById("noiseIntenseC");
+    const highlightsC = document.getElementById("highlightC");
+    const shadowsC = document.getElementById("shadowC");
+
+    const exposureSV = document.getElementById("exposureSV");
+    const noiseIntenseSV = document.getElementById("noiseIntenseSV");
+    const highlightsSV = document.getElementById("highlightsSV");
+    const shadowsSV = document.getElementById("shadowsSV");
+
+
+    exposureSV.innerHTML = exposureS.value;
+    noiseIntenseSV.innerHTML = noiseIntenseS.value;
+    highlightsSV.innerHTML = highlightsS.value;
+    shadowsSV.innerHTML = shadowsS.value;
+
 
     let isFilterApplied = false;
 
@@ -39,26 +62,100 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     filterC.addEventListener("change", async (event)=>{
+        
+
         await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+
     });
 
     exposureS.addEventListener("change", async (event)=>{
+        exposureSV.innerHTML = exposureS.value;
+
         await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 
     noiseIntenseS.addEventListener("change", async (event)=>{
+        noiseIntenseSV.innerHTML = noiseIntenseS.value;
+
         await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 
     highlightsS.addEventListener("change", async (event)=>{
+        highlightsSV.innerHTML = highlightsS.value;
+
         await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 
     shadowsS.addEventListener("change", async (event)=>{
+        shadowsSV.innerHTML = shadowsS.value;
+
         await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
-});
 
+    exposureC.addEventListener('change', function() {
+        if (this.checked) {
+            console.log("Exposure Checkbox is checked..");
+            noiseIntenseC.checked = false;
+            highlightsC.checked = false;
+            shadowsC.checked = false;
+
+            exposureSContainer.style.display = "inline-block";
+            noiseIntenseSContainer.style.display = "none";
+            highlightsSContainer.style.display = "none";
+            shadowsSContainer.style.display = "none";
+        } else {
+            exposureSContainer.style.display = "none";
+        }
+    });
+
+    noiseIntenseC.addEventListener('change', function() {
+        if (this.checked) {
+            console.log("Noise Intense Checkbox is checked..");
+            exposureC.checked = false;
+            highlightsC.checked = false;
+            shadowsC.checked = false;
+
+            exposureSContainer.style.display = "none";
+            noiseIntenseSContainer.style.display = "inline-block";
+            highlightsSContainer.style.display = "none";
+            shadowsSContainer.style.display = "none";
+        } else {
+            noiseIntenseSContainer.style.display = "none";
+        }
+    });
+
+    highlightsC.addEventListener('change', function() {
+        if (this.checked) {
+            console.log("Highlights Checkbox is checked..");
+            exposureC.checked = false;
+            noiseIntenseC.checked = false;
+            shadowsC.checked = false;
+
+            exposureSContainer.style.display = "none";
+            noiseIntenseSContainer.style.display = "none";
+            highlightsSContainer.style.display = "inline-block";
+            shadowsSContainer.style.display = "none";
+        } else {
+            highlightsSContainer.style.display = "none";
+        }
+    });
+
+    shadowsC.addEventListener('change', function() {
+        if (this.checked) {
+            console.log("Shadows Checkbox is checked..");
+            exposureC.checked = false;
+            noiseIntenseC.checked = false;
+            highlightsC.checked = false;
+
+            exposureSContainer.style.display = "none";
+            noiseIntenseSContainer.style.display = "none";
+            highlightsSContainer.style.display = "none";
+            shadowsSContainer.style.display = "inline-block";
+        } else {
+            shadowsSContainer.style.display = "none";
+        }
+    });
+});
 
 
 
@@ -137,7 +234,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
             data[i+1] = data[i+1] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
             data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
         }
-        console.log(data);
+        //console.log(data);
 
         ctx.putImageData(imageData, 0, 0);
 
