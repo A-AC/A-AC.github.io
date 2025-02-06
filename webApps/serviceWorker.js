@@ -1,4 +1,4 @@
-const staticDevFilter = "dev-filter-site-v1";
+const staticDevFilter = "dev-xphoto-site-v1";
 const assets = [
     "/"
 ];
