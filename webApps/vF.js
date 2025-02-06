@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             photo.onload = async () => {
                     if (!isFilterApplied) {
                         console.log("Image loaded");
-                        await render(originalPh, photo, exposureS.value, filterC.value);
+                        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
                       isFilterApplied = true;  // Mark the filter as applied
                     }
             };
@@ -230,9 +230,11 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         // render
         for (let i = 0; i < data.length; i += 4) {
             let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-            data[i] = data[i] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
-            data[i+1] = data[i+1] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
-            data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseS.value) - noiseIntenseS.value/2));
+
+            data[i] = data[i] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
+            data[i+1] = data[i+1] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
+            data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
+            
         }
         //console.log(data);
 
@@ -254,4 +256,11 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
             }
         }, "image/jpeg");
     }
+}
+
+function shadowCurve(x, b){
+    return Math.floor(b*1/(Math.sqrt(2.0*3.14))*Math.exp(-(1/2)*((x-0)/42)*((x-0)/42))); //Lets hope this works bby
+}
+function highlightsCurve(x, b){
+    return Math.floor(b*1/(Math.sqrt(2.0*3.14))*Math.exp(-(1/2)*((x-255)/64)*((x-255)/64)));
 }
