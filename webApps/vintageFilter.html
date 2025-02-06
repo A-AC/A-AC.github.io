@@ -18,7 +18,7 @@
     <div style="text-align: center;">
         <input type="file" id="fileInput" accept="image/*">
         <img id="photo" alt="Uploaded Image" style="display: none;">
-        <br>
+        <p></p>
         <label for="filter">Choose a filter:</label>
 
         <select name="Filter" id="filterC">
@@ -30,7 +30,7 @@
             <option value="noise">Noise (Preset)</option>
             <option value="crazy">crazy</option>
         </select>
-
+        <br>
         <br>
         <a id="downloadLink" href="#" style="display: none;">Download Image</a>
         <br>
@@ -44,26 +44,35 @@
         </div>
         <div class="keen-slider__slide number-slide1">
             <label class="container">
+                <img src="0.png" style="border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 24px;">
                 <input type="checkbox" id="exposureC">
                 <span class="checkmark"></span>
+                
             </label>
         </div>
         <div class="keen-slider__slide number-slide2">
             <label class="container">
+                <img src="1.png" style="border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 24px;">
                 <input type="checkbox" id="noiseIntenseC">
                 <span class="checkmark" ></span>
             </label>
         </div>
         <div class="keen-slider__slide number-slide3">
             <label class="container">
+                <img src="2.png" style="border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 24px;">
                 <input type="checkbox" id="highlightC">
                 <span class="checkmark"></span>
             </label>
         </div>
         <div class="keen-slider__slide number-slide4">
             <label class="container">
+                <img src="3.png" style="border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 24px;">
                 <input type="checkbox" id="shadowC">
                 <span class="checkmark"></span>
+            </label>
+        </div>
+        <div class="keen-slider__slide number-slide1">
+            <label class="container">
             </label>
         </div>
     </div>
@@ -102,7 +111,7 @@
         var slider = new KeenSlider("#settings", {
             slides: {
             perView: 3,
-            spacing: 10,
+            spacing: 15,
             },
         })
     </script>

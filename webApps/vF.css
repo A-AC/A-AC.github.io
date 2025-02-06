@@ -38,7 +38,20 @@ input {
 .slidersInput{
     text-align: center;
     width: 100%;
+    position: fixed;
+    top: 85%;
+    right: 0px;
+    left: 0px;
 }
+
+#settings{
+    position: fixed;
+    top: 70%;
+    right: 0px;
+    left: 0px;
+    text-align: center;
+}
+
 
 .slidecontainer{
     width: 100%;
@@ -205,3 +218,4 @@ input {
     border-radius: 50%;
     background: white;
 } */
+
