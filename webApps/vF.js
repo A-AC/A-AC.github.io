@@ -277,7 +277,6 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
                 // Update download link
                 downloadLink.href = blobUrl;
                 downloadLink.download = "filtered-image.jpg";  
-                downloadLink.style.display = "inline-block";
             }
         }, "image/jpeg");
     }

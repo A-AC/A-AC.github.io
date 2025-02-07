@@ -13,14 +13,20 @@
     <link rel="icon" type="image/png" href="icon.png">
 </head>
 <body>
-    <p class="by">by xolo</p>
-    <h1>Photo Editor</h1>
+    <div class="header">
+        <img id="logo" src="xolo.png">
+        <p class="by">by xolo</p>
+        <h1>Photo Editor</h1>
+    </div>
     
-    <div style="text-align: center;">
-        <input type="file" id="fileInput" accept="image/*">
-        <img id="photo" alt="Uploaded Image" style="display: none;">
+    <div class="controls" style="text-align: center;">
+        <input type="file" style="margin: 3px;" id="fileInput" accept="image/*">
+        <a id="downloadLink" href="#" style="display: inline-block;">
+            <img id="photo" alt="Uploaded Image" style="display: none;">
+        </a>
+        
         <p></p>
-        <label for="filter">Filter:</label>
+        <label for="filter">Filters:</label>
 
         <select name="Filter" id="filterC">
             <option value="NONE">No Filter</option>
@@ -36,10 +42,7 @@
             <option value="NONE">No Preset</option>
             <option value="noise">Noise</option>
         </select>
-        <br>
-        <br>
-        <br>
-        <a id="downloadLink" href="#" style="display: none;">Download Image</a>
+        
         <br>
     </div>
     <br>
