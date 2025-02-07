@@ -1,10 +1,10 @@
 onmessage = (e) => {
     console.log("Worker: Message received from main script");
 
-    const exposureS = document.getElementById("exposureS");
-    const noiseIntenseS = document.getElementById("noiseIntenseS");
-    const highlightsS = document.getElementById("highlightsS");
-    const shadowsS = document.getElementById("shadowsS");
+    const exposureS = 100;
+    const noiseIntenseS = 100;
+    const highlightsS = 100;
+    const shadowsS = 100;
 
     //[firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]
     var data = e;
