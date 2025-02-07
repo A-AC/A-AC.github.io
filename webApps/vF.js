@@ -177,8 +177,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         if (window.Worker) {
 
             var x = await renderWithWorkers(data);
-            console.log("x",x);
-            data = x;
+            data = x.reduce((acc, arr) => acc.concat(arr), [],);;
 
             /*const myWorker1 = new Worker("renderWorker.js");
             const myWorker2 = new Worker("renderWorker.js");
