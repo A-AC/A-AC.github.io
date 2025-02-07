@@ -9,6 +9,7 @@ onmessage = (e) => {
     const highlightsS = e.data[4];
     const shadowsS = e.data[5];
     const sparksIntenseV = e.data[6];
+    const canvasW = e.data[7];
 
     //console.log("e:",exposureS);
     //console.log("f:",filter);
@@ -81,19 +82,19 @@ onmessage = (e) => {
                         if (path == 0){
                             //Up
                             if (last == 1){
-                                index -= 4*canvas.width;
+                                index -= 4*canvasW;
                                 path = last;
                             } else {
-                                index += 4*canvas.width;
+                                index += 4*canvasW;
                             }
 
                         } else if (path == 1){
                             //Down
                             if (last == 0){
-                                index += 4*canvas.width;
+                                index += 4*canvasW;
                                 path = last;
                             } else {
-                                index -= 4*canvas.width;
+                                index -= 4*canvasW;
                             }
 
                         } else if (path == 2){
@@ -134,10 +135,10 @@ onmessage = (e) => {
                         data[index+2] = 255;
                         if (dir == 0){
                             // UP
-                            index += 4*canvas.width;
+                            index += 4*canvasW;
                         } else {
                             // Down
-                            index -= 4*canvas.width;
+                            index -= 4*canvasW;
                         }   
                         
                         if (path == dirSide == 1){
@@ -149,11 +150,11 @@ onmessage = (e) => {
                             index += 4;
                         }else if (path == 2 && dir == 0){
                             //Up
-                            index += 4*canvas.width;
+                            index += 4*canvasW;
 
                         }else if (path == 3 && dir == 1){
                             //Down
-                            index -= 4*canvas.width;
+                            index -= 4*canvasW;
                         }
 
 

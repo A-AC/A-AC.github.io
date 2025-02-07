@@ -236,7 +236,7 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
 
         if (window.Worker) {
             console.time("test1");
-            var x = await renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV);
+            var x = await renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV, canvas.width);
             console.timeEnd("test1");
             data = flattenUint8ClampedArrays(x);
 
@@ -449,12 +449,12 @@ function joinUint8ClampedArrays(arr1, arr2) {
     return combined;
 }
 
-async function renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV) {
+async function renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV, canvasW) {
     //const segmentsPerWorker = Math.round(data.length / 4);
     const chunks = splitin4Uint8ClampedArray(data);
 
     // let each worker handle it's own part
-    const promises = chunks.map(c => renderwithworkers([c, exposureV, filter, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV]));
+    const promises = chunks.map(c => renderwithworkers([c, exposureV, filter, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV, canvasW]));
 
     const segmentsResults = await Promise.all(promises);
     return segmentsResults.reduce((acc, arr) => acc.concat(arr), [],);
