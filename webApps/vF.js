@@ -173,7 +173,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
 
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
-        //console.log(data);
+        console.log(data);
 
         if (window.Worker) {
 
@@ -247,8 +247,6 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         console.log("msg in main:",data);
 
         imageData.data.set(data);
-        
-        //console.log(data);
 
         ctx.putImageData(imageData, 0, 0);
 

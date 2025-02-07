@@ -71,6 +71,7 @@ onmessage = (e) => {
         
     }
     console.log("Worker: Posting message back to main script");
+    console.log("Worker data:",data);
     postMessage(data);
     self.close();
 };
