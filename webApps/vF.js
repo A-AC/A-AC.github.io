@@ -216,7 +216,7 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
         const sparkIntenseLimit = 10000;
-        const sparkLength = 150;
+        const sparkLength = 300;
 
         //console.log(data);
 
@@ -346,7 +346,7 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
                         let last = 4;
                         dir = Math.round(Math.random());
                         dirSide = Math.round(Math.random());
-                        for (var j=0; j<Math.floor(Math.random() * (sparkLength)); j++){
+                        for (var j=0; j<Math.floor(Math.random() * (sparkLength*1.5)); j++){
                             if (Math.floor(Math.random() * 50) == 1){
                                 dir = Math.round(Math.random());
                             }

@@ -63,7 +63,7 @@ onmessage = (e) => {
     }
 
     const sparkIntenseLimit = 10000;
-    const sparkLength = 150;
+    const sparkLength = 300;
     // render
     for (let i = 0; i < data.length; i += 4) {
         // sparks
@@ -124,7 +124,7 @@ onmessage = (e) => {
                 let last = 4;
                 dir = Math.round(Math.random());
                 dirSide = Math.round(Math.random());
-                for (var j=0; j<Math.floor(Math.random() * (sparkLength*1.2)); j++){
+                for (var j=0; j<Math.floor(Math.random() * (sparkLength*1.5)); j++){
                     if (Math.floor(Math.random() * 50) == 1){
                         dir = Math.round(Math.random());
                     }
