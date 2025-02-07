@@ -175,7 +175,10 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         let data = imageData.data;
 
         if (window.Worker) {
-            const myWorker1 = new Worker("renderWorker.js");
+
+            data = await renderWithWorkers(data);
+
+            /*const myWorker1 = new Worker("renderWorker.js");
             const myWorker2 = new Worker("renderWorker.js");
             let [firstHalf, secondHalf] = splitUint8ClampedArray(data, data.length / 2);
             var arr1;
@@ -198,7 +201,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
                 console.log("Message received from renderworker2");
             };
 
-            data = joinUint8ClampedArrays(arr1, arr2);
+            data = joinUint8ClampedArrays(arr1, arr2);*/
 
         } else {
             console.log("Your browser doesn't support web workers.");
@@ -307,3 +310,29 @@ function joinUint8ClampedArrays(arr1, arr2) {
     combined.set(arr2, arr1.length);
     return combined;
 }
+
+async function renderWithWorkers(data) {
+
+    const segmentsPerWorker = Math.round(data.length / 4);
+    const chunks = _.chunk(data, segmentsPerWorker);
+
+    // let each worker handle it's own part
+    const promises = chunks.map(c => renderwithworkers(c));
+
+    const segmentsResults = await Promise.all(promises);
+    return segmentsResults.reduce((acc, arr) => acc.concat(arr), []);
+
+}
+
+// we turn the worker activation into a promise
+const renderwithworkers = arr => {
+    return new Promise((resolve, reject) => {
+        let worker = new Worker('renderWorker.js');
+        // wait for a message and resolve
+        worker.onmessage = ({data}) => resolve(data);
+        // if we get an error, reject
+        worker.onerror = reject;
+        // post a message to the worker
+        worker.postMessage(arr);
+    });
+};
