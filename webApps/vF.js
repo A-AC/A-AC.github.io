@@ -1,4 +1,4 @@
-import _ from 'lodash.js'
+import _ from '/webApps/lodash.js'
 
 document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.getElementById("fileInput");
