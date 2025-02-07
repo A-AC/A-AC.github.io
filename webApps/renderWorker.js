@@ -183,3 +183,7 @@ function shadowCurve(x, b){
 function highlightsCurve(x, b){
     return Math.floor(b*1/(Math.sqrt(2.0*3.14))*Math.exp(-(1/2)*((x-255)/64)*((x-255)/64)));
 }
+
+function generateDirection(){
+    return Math.floor(Math.random()*4);
+}
