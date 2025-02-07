@@ -176,12 +176,14 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         //console.log(data);
 
         if (window.Worker) {
-
+            console.time("test1");
             var x = await renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV);
             data = flattenUint8ClampedArrays(x);
+            console.timeEnd("test1");
 
         } else {
             console.log("Your browser doesn't support web workers.");
+            console.time("test2");
              // Filters
             switch (filter){
                 case "BN":
@@ -241,6 +243,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
                 data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
                 
             }
+            console.timeEnd("test2");
 
         }
 
