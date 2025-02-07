@@ -5,6 +5,7 @@ onmessage = (e) => {
     const noiseIntenseS = 100;
     const highlightsS = 100;
     const shadowsS = 100;
+    var filter = "";
 
     //[firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]
     var data = e;
