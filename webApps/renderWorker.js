@@ -1,4 +1,6 @@
 onmessage = (e) => {
+    console.log("Worker: Message received from main script");
+
     //[firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]
     var data = e.data[0];
     const exposureS = e.data[1];
@@ -68,7 +70,7 @@ onmessage = (e) => {
         data[i+2] = data[i+2] - (-exposureS - (Math.floor(Math.random() * noiseIntenseS) - noiseIntenseS/2) - highlightsCurve(avg, highlightsS) - shadowCurve(avg, shadowsS));
         
     }
-    //console.log("Worker: Posting message back to main script");
+    console.log("Worker: Posting message back to main script");
     postMessage(data);
     self.close();
 };
