@@ -216,7 +216,7 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
         const sparkIntenseLimit = 10000;
-        const sparkLength = 100;
+        const sparkLength = 150;
 
         //console.log(data);
 
