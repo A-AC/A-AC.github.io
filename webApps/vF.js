@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
             photo.onload = async () => {
                     if (!isFilterApplied) {
                         console.log("Image loaded");
-                        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+                        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
                       isFilterApplied = true;  // Mark the filter as applied
                     }
             };
@@ -191,7 +191,7 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
 
                 break;
             default:
-                1+1; //Do nothing
+                break;//Do nothing
         }
 
         if (window.Worker) {
