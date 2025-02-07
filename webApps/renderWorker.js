@@ -75,3 +75,10 @@ onmessage = (e) => {
     postMessage(data);
     self.close();
 };
+
+function shadowCurve(x, b){
+    return Math.floor(b*1/(Math.sqrt(2.0*3.14))*Math.exp(-(1/2)*((x-0)/42)*((x-0)/42))); //Lets hope this works bby
+}
+function highlightsCurve(x, b){
+    return Math.floor(b*1/(Math.sqrt(2.0*3.14))*Math.exp(-(1/2)*((x-255)/64)*((x-255)/64)));
+}
