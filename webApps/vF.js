@@ -177,7 +177,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
 
         if (window.Worker) {
 
-            var x = await renderWithWorkers(data);
+            var x = await renderWithWorkers(data,exposureV, filter, noiseIntenseV, highlightsV, shadowsV);
             data = flattenUint8ClampedArrays(x);
 
         } else {
@@ -300,12 +300,12 @@ function joinUint8ClampedArrays(arr1, arr2) {
     return combined;
 }
 
-async function renderWithWorkers(data) {
+async function renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV) {
     //const segmentsPerWorker = Math.round(data.length / 4);
     const chunks = splitin4Uint8ClampedArray(data);
 
     // let each worker handle it's own part
-    const promises = chunks.map(c => renderwithworkers(c));
+    const promises = chunks.map(c => renderwithworkers([c, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]));
 
     const segmentsResults = await Promise.all(promises);
     return segmentsResults.reduce((acc, arr) => acc.concat(arr), [],);
@@ -321,7 +321,7 @@ const renderwithworkers = arr => {
         // if we get an error, reject
         worker.onerror = reject;
         // post a message to the worker
-        worker.postMessage([arr, exposureV]);
+        worker.postMessage(arr);
     });
 };
 
