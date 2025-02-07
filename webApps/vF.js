@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             photo.src = imageUrl;
             originalPh.src = imageUrl;
             photo.style.display = "block";
-            downloadLink.style.display = "none";  // Hide download link initiall
+            downloadLink.style.display = "block";  // Hide download link initiall
             
             // Wait for the image to load befo
             // tre applying the filter
