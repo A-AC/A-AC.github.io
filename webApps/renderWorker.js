@@ -1,14 +1,14 @@
 onmessage = (e) => {
     console.log("Worker: Message received from main script");
 
-    const result = e.data[0] * e.data[1];
     //[firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]
-    let data = e[0];
+    const data = e[0];
     const exposureV = e[1];
     const filter = e[2];
     const noiseIntenseV = e[3]
     const highlightsV = e[4]
     const shadowsV = e[5]
+    console.log(typeof data)
     // Filters
     switch (filter){
         case "BN":
