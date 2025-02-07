@@ -1,3 +1,6 @@
+const myWorker1 = new Worker("renderWorker.js");
+const myWorker2 = new Worker("renderWorker.js");
+
 document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.getElementById("fileInput");
     const photo = document.getElementById("photo");
@@ -24,9 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const noiseIntenseSV = document.getElementById("noiseIntenseSV");
     const highlightsSV = document.getElementById("highlightsSV");
     const shadowsSV = document.getElementById("shadowsSV");
-
-    const myWorker1 = new Worker("renderWorker.js");
-    const myWorker2 = new Worker("renderWorker.js");
 
 
     exposureSV.innerHTML = exposureS.value;
