@@ -64,7 +64,7 @@ onmessage = (e) => {
             break;
 
         default:
-            data = e.data;
+            data = e.data[0];
     }
 
     // render
