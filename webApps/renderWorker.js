@@ -1,11 +1,11 @@
 onmessage = (e) => {
     console.log("Worker: Message received from main script");
 
-    const exposureS = 0;
-    const noiseIntenseS = 0;
+    const exposureS = 100;
+    const noiseIntenseS = 100;
     const highlightsS = 0;
     const shadowsS = 0;
-    var filter = "";
+    var filter = "red";
 
     //[firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]
     var data = e.data;
