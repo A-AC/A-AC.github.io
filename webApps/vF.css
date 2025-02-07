@@ -2,8 +2,8 @@ img {
     display: block;
     margin: 10px auto;
     border: 1px solid #000;
-    max-width: 60%;
-    height: auto;
+    max-height: 47vh;
+    width: auto;
 }
 
 body {
@@ -66,7 +66,7 @@ input {
     /* Full-width */
     height: 25px;
     /* Specified height */
-    background: #d3d3d3;
+    background: #4e4e4e;
     /* Grey background */
     outline: none;
     /* Remove outline */
@@ -92,10 +92,11 @@ input {
     /* Set a specific slider handle width */
     height: 25px;
     /* Slider handle height */
-    background: #1b1b1b;
+    background: #d3d3d3;
     /* Green background */
     cursor: pointer;
     /* Cursor on hover */
+    border-radius: 50%;
 }
 
 .slider::-moz-range-thumb {
@@ -103,7 +104,7 @@ input {
     /* Set a specific slider handle width */
     height: 25px;
     /* Slider handle height */
-    background: #1b1b1b;
+    background: #d3d3d3;
     /* Green background */
     cursor: pointer;
     /* Cursor on hover */
@@ -149,7 +150,7 @@ input {
     font-size: 50px;
     color: #fff;
     font-weight: 500;
-    height: 120px;
+    height: 14%;
     max-height: 100vh;
 }
 

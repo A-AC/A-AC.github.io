@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const originalPh = document.getElementById("originalPhoto");
     const downloadLink = document.getElementById("downloadLink");
     const filterC = document.getElementById("filterC");
+    const presetC = document.getElementById("presetC");
 
     const exposureS = document.getElementById("exposureS");
     const noiseIntenseS = document.getElementById("noiseIntenseS");
@@ -62,32 +63,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     filterC.addEventListener("change", async (event)=>{
-        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
 
+    });
+
+    presetC.addEventListener("change", async (event)=>{
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 
     exposureS.addEventListener("change", async (event)=>{
         exposureSV.innerHTML = exposureS.value;
 
-        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 
     noiseIntenseS.addEventListener("change", async (event)=>{
         noiseIntenseSV.innerHTML = noiseIntenseS.value;
 
-        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 
     highlightsS.addEventListener("change", async (event)=>{
         highlightsSV.innerHTML = highlightsS.value;
 
-        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);;
     });
 
     shadowsS.addEventListener("change", async (event)=>{
         shadowsSV.innerHTML = shadowsS.value;
 
-        await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
     });
 
     exposureC.addEventListener('change', function() {
@@ -161,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * Apply exposure filter to the uploaded image
  * @param {HTMLImageElement} imgElement 
  */
-async function render(originaElement, imgElement, exposureV, filter, noiseIntenseV, highlightsV, shadowsV) {
+async function render(originaElement, imgElement, exposureV, filter, preset, noiseIntenseV, highlightsV, shadowsV) {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
@@ -174,6 +179,20 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
         //console.log(data);
+
+        switch(preset){
+            case "noise":
+                noiseIntenseV = 100;
+                noiseIntenseS.value = 100;
+                noiseIntenseSV.innerHTML = noiseIntenseS.value;
+                exposureV = 10;
+                exposureS.value = 10;
+                exposureSV.innerHTML = exposureS.value;
+
+                break;
+            default:
+                1+1; //Do nothing
+        }
 
         if (window.Worker) {
             console.time("test1");
@@ -209,13 +228,6 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
                     for (let i = 0; i < data.length; i += 4) {
                         data[i] = data[i + 2] = 0;
                     }
-                    break;
-
-                case "noise":
-                    noiseIntenseV = 100;
-                    noiseIntenseS.value = 100;
-                    exposureV = 10;
-                    exposureS.value = 10;
                     break;
 
                 case "crazy":

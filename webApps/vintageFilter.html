@@ -20,7 +20,7 @@
         <input type="file" id="fileInput" accept="image/*">
         <img id="photo" alt="Uploaded Image" style="display: none;">
         <p></p>
-        <label for="filter">Choose a filter:</label>
+        <label for="filter">Filter:</label>
 
         <select name="Filter" id="filterC">
             <option value="NONE">No Filter</option>
@@ -28,9 +28,15 @@
             <option value="red">Red</option>
             <option value="green">Green</option>
             <option value="blue">Blue</option>
-            <option value="noise">Noise (Preset)</option>
             <option value="crazy">crazy</option>
         </select>
+
+        <label for="preset">Presets:</label>
+        <select name="Presets" id="presetC">
+            <option value="NONE">No Preset</option>
+            <option value="noise">Noise</option>
+        </select>
+        <br>
         <br>
         <br>
         <a id="downloadLink" href="#" style="display: none;">Download Image</a>
@@ -39,13 +45,13 @@
     <br>
 
     <div id="settings" class="keen-slider">
-        <div class="keen-slider__slide number-slide1">
+        <div class="keen-slider__slide number-slide0">
             <label class="container">
             </label>
         </div>
         <div class="keen-slider__slide number-slide1">
             <label class="container">
-                <img src="0.png" style="border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 24px;">
+                <img src="0.png" style="width: 60%; height: 60%; border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 20%;">
                 <input type="checkbox" id="exposureC">
                 <span class="checkmark"></span>
                 
@@ -53,26 +59,26 @@
         </div>
         <div class="keen-slider__slide number-slide2">
             <label class="container">
-                <img src="1.png" style="border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 24px;">
+                <img src="1.png" style="width: 60%; height: 60%;border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 20%;">
                 <input type="checkbox" id="noiseIntenseC">
                 <span class="checkmark" ></span>
             </label>
         </div>
         <div class="keen-slider__slide number-slide3">
             <label class="container">
-                <img src="2.png" style="border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 24px;">
+                <img src="2.png" style="width: 60%; height: 60%; border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 20%">
                 <input type="checkbox" id="highlightC">
                 <span class="checkmark"></span>
             </label>
         </div>
         <div class="keen-slider__slide number-slide4">
             <label class="container">
-                <img src="3.png" style="border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 24px;">
+                <img src="3.png" style="width: 60%; height: 60%; border-radius: 50%; position: relative; border: 0px solid #000; z-index: 1000; margin: 20%;">
                 <input type="checkbox" id="shadowC">
                 <span class="checkmark"></span>
             </label>
         </div>
-        <div class="keen-slider__slide number-slide1">
+        <div class="keen-slider__slide number-slide5">
             <label class="container">
             </label>
         </div>
@@ -110,10 +116,15 @@
 
     <script>
         var slider = new KeenSlider("#settings", {
-            slides: {
-            perView: 3,
-            spacing: 15,
+        breakpoints: {
+            "(min-width: 390px)": {
+            slides: { perView: 3, spacing: 15 },
             },
+            "(min-width: 1000px)": {
+            slides: { perView: 9, spacing: 6 },
+            },
+        },
+        slides: { perView: 1 },
         })
     </script>
         
