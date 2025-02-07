@@ -48,9 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
             photo.onload = async () => {
                     if (!isFilterApplied) {
                         console.log("Image loaded");
-                        console.time("Execution Time");
                         await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
-                        console.timeEnd("Execution Time");
                       isFilterApplied = true;  // Mark the filter as applied
                     }
             };
@@ -183,10 +181,10 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
             var arr1;
             var arr2;
 
-            myWorker1.postMessage([firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]);
+            myWorker1.postMessage(firstHalf);
             console.log("Message posted to renderworker1");
             
-            myWorker2.postMessage([secondHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]);
+            myWorker2.postMessage(secondHalf);
             console.log("Message posted to renderworker2");
 
             myWorker1.onmessage = (e) => {

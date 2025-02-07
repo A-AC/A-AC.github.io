@@ -1,13 +1,14 @@
 onmessage = (e) => {
     console.log("Worker: Message received from main script");
 
+    const exposureS = document.getElementById("exposureS");
+    const noiseIntenseS = document.getElementById("noiseIntenseS");
+    const highlightsS = document.getElementById("highlightsS");
+    const shadowsS = document.getElementById("shadowsS");
+
     //[firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]
-    var data = e[0];
-    const exposureV = e[1];
-    const filter = e[2];
-    const noiseIntenseV = e[3]
-    const highlightsV = e[4]
-    const shadowsV = e[5]
+    var data = e;
+
     // Filters
     switch (filter){
         case "BN":
@@ -36,9 +37,9 @@ onmessage = (e) => {
             break;
 
         case "noise":
-            noiseIntenseV = 100;
+            noiseIntenseS = 100;
             noiseIntenseS.value = 100;
-            exposureV = 10;
+            exposureS = 10;
             exposureS.value = 10;
             break;
 
@@ -62,9 +63,9 @@ onmessage = (e) => {
     for (let i = 0; i < data.length; i += 4) {
         let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
 
-        data[i] = data[i] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
-        data[i+1] = data[i+1] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
-        data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
+        data[i] = data[i] - (-exposureS - (Math.floor(Math.random() * noiseIntenseS) - noiseIntenseS/2) - highlightsCurve(avg, highlightsS) - shadowCurve(avg, shadowsS));
+        data[i+1] = data[i+1] - (-exposureS - (Math.floor(Math.random() * noiseIntenseS) - noiseIntenseS/2) - highlightsCurve(avg, highlightsS) - shadowCurve(avg, shadowsS));
+        data[i+2] = data[i+2] - (-exposureS - (Math.floor(Math.random() * noiseIntenseS) - noiseIntenseS/2) - highlightsCurve(avg, highlightsS) - shadowCurve(avg, shadowsS));
         
     }
     console.log("Worker: Posting message back to main script");
