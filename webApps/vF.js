@@ -173,6 +173,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
 
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
+        console.log(data);
 
         if (window.Worker) {
 
