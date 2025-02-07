@@ -321,7 +321,7 @@ const renderwithworkers = arr => {
         // if we get an error, reject
         worker.onerror = reject;
         // post a message to the worker
-        worker.postMessage(arr);
+        worker.postMessage([arr, exposureV]);
     });
 };
 
