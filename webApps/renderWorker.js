@@ -8,6 +8,7 @@ onmessage = (e) => {
     const noiseIntenseS = e.data[3];
     const highlightsS = e.data[4];
     const shadowsS = e.data[5];
+    const sparksIntenseV = e.data[6];
 
     //console.log("e:",exposureS);
     //console.log("f:",filter);
@@ -44,13 +45,6 @@ onmessage = (e) => {
             }
             break;
 
-        case "noise":
-            noiseIntenseS = 100;
-            noiseIntenseS.value = 100;
-            exposureS = 10;
-            exposureS.value = 10;
-            break;
-
         case "crazy":
             for (let i = 0; i < data.length; i += 4) {
                 if (data[i] > data[i+1] && data[i] > data[i+2]){
@@ -67,8 +61,109 @@ onmessage = (e) => {
             data = e.data[0];
     }
 
+    const sparkIntenseLimit = 10000;
+    const sparkLength = 100;
     // render
     for (let i = 0; i < data.length; i += 4) {
+        // sparks
+        if (sparksIntenseV != 0 && Math.floor(Math.random() * sparkIntenseLimit) < sparksIntenseV){
+            if (Math.round(Math.random()) == 0){
+                // Dots
+                let index = i;
+                let last = 4;
+                for (var j=0; j<Math.floor(Math.random() * sparkLength); j++){
+                    if (index <= data.length){
+                        path = generateDirection();
+                        data[index] = 255;
+                        data[index+1] = 255;
+                        data[index+2] = 255;
+                        
+                        if (path == 0){
+                            //Up
+                            if (last == 1){
+                                index -= 4*canvas.width;
+                                path = last;
+                            } else {
+                                index += 4*canvas.width;
+                            }
+
+                        } else if (path == 1){
+                            //Down
+                            if (last == 0){
+                                index += 4*canvas.width;
+                                path = last;
+                            } else {
+                                index -= 4*canvas.width;
+                            }
+
+                        } else if (path == 2){
+                            //Left
+                            if (last == 3){
+                                index += 4;
+                                path = last;
+                            } else {
+                                index -= 4;
+                            }
+
+                        }else if (path == 3){
+                            //Rigth
+                            if (last == 2){
+                                index -= 4;
+                                path = last;
+                            } else {
+                                index += 4;
+                            }
+                        }
+                        last = path;
+                    }
+                }
+            } else{
+                // Dots
+                let index = i;
+                let last = 4;
+                dir = Math.round(Math.random());
+                dirSide = Math.round(Math.random());
+                for (var j=0; j<Math.floor(Math.random() * (sparkLength/2)); j++){
+                    if (Math.floor(Math.random() * 50) == 1){
+                        dir = Math.round(Math.random());
+                    }
+                    if (index <= data.length){
+                        path = generateDirection();
+                        data[index] = 255;
+                        data[index+1] = 255;
+                        data[index+2] = 255;
+                        if (dir == 0){
+                            // UP
+                            index += 4*canvas.width;
+                        } else {
+                            // Down
+                            index -= 4*canvas.width;
+                        }   
+                        
+                        if (path == dirSide == 1){
+                            //Left
+                            index -= 4;
+
+                        }else if (path == dirSide == 0){
+                            //Rigth
+                            index += 4;
+                        }else if (path == 2 && dir == 0){
+                            //Up
+                            index += 4*canvas.width;
+
+                        }else if (path == 3 && dir == 1){
+                            //Down
+                            index -= 4*canvas.width;
+                        }
+
+
+                        last = path;
+                    }
+                }
+            }
+        }
+
+
         let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
 
         data[i] = data[i] - (-exposureS - (Math.floor(Math.random() * noiseIntenseS) - noiseIntenseS/2) - highlightsCurve(avg, highlightsS) - shadowCurve(avg, shadowsS));

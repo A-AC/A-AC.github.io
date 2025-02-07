@@ -10,27 +10,32 @@ document.addEventListener("DOMContentLoaded", () => {
     const noiseIntenseS = document.getElementById("noiseIntenseS");
     const highlightsS = document.getElementById("highlightsS");
     const shadowsS = document.getElementById("shadowsS");
+    const sparksS = document.getElementById("sparksS");
 
     const exposureSContainer = document.getElementById("slidecontainerExposure");
     const noiseIntenseSContainer = document.getElementById("slidecontainerNoiseIntense");
     const highlightsSContainer = document.getElementById("slidecontainerHighlights");
     const shadowsSContainer = document.getElementById("slidecontainerShadows");
+    const sparksSContainer = document.getElementById("slidecontainerSparks");
 
     const exposureC = document.getElementById("exposureC");
     const noiseIntenseC = document.getElementById("noiseIntenseC");
     const highlightsC = document.getElementById("highlightC");
     const shadowsC = document.getElementById("shadowC");
+    const sparksC = document.getElementById("sparksC");
 
     const exposureSV = document.getElementById("exposureSV");
     const noiseIntenseSV = document.getElementById("noiseIntenseSV");
     const highlightsSV = document.getElementById("highlightsSV");
     const shadowsSV = document.getElementById("shadowsSV");
+    const sparksSV = document.getElementById("sparksSV");
 
 
     exposureSV.innerHTML = exposureS.value;
     noiseIntenseSV.innerHTML = noiseIntenseS.value;
     highlightsSV.innerHTML = highlightsS.value;
     shadowsSV.innerHTML = shadowsS.value;
+    sparksSV.innerHTML = shadowsS.value;
 
 
     let isFilterApplied = false;
@@ -49,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
             photo.onload = async () => {
                     if (!isFilterApplied) {
                         console.log("Image loaded");
-                        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+                        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value, sparksS.value);
                       isFilterApplied = true;  // Mark the filter as applied
                     }
             };
@@ -63,36 +68,42 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     filterC.addEventListener("change", async (event)=>{
-        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value, sparksS.value);
 
     });
 
     presetC.addEventListener("change", async (event)=>{
-        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value, sparksS.value);
     });
 
     exposureS.addEventListener("change", async (event)=>{
         exposureSV.innerHTML = exposureS.value;
 
-        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value, sparksS.value);
     });
 
     noiseIntenseS.addEventListener("change", async (event)=>{
         noiseIntenseSV.innerHTML = noiseIntenseS.value;
 
-        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value, sparksS.value);
     });
 
     highlightsS.addEventListener("change", async (event)=>{
         highlightsSV.innerHTML = highlightsS.value;
 
-        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);;
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value, sparksS.value);
     });
 
     shadowsS.addEventListener("change", async (event)=>{
         shadowsSV.innerHTML = shadowsS.value;
 
-        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value, sparksS.value);
+    });
+
+    sparksS.addEventListener("change", async (event)=>{
+        sparksSV.innerHTML = sparksS.value;
+
+        await render(originalPh, photo, exposureS.value, filterC.value, presetC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value, sparksS.value);
     });
 
     exposureC.addEventListener('change', function() {
@@ -101,11 +112,13 @@ document.addEventListener("DOMContentLoaded", () => {
             noiseIntenseC.checked = false;
             highlightsC.checked = false;
             shadowsC.checked = false;
+            sparksC.checked = false;
 
             exposureSContainer.style.display = "inline-block";
             noiseIntenseSContainer.style.display = "none";
             highlightsSContainer.style.display = "none";
             shadowsSContainer.style.display = "none";
+            sparksSContainer.style.display = "none";
         } else {
             exposureSContainer.style.display = "none";
         }
@@ -117,11 +130,13 @@ document.addEventListener("DOMContentLoaded", () => {
             exposureC.checked = false;
             highlightsC.checked = false;
             shadowsC.checked = false;
+            sparksC.checked = false;
 
             exposureSContainer.style.display = "none";
             noiseIntenseSContainer.style.display = "inline-block";
             highlightsSContainer.style.display = "none";
             shadowsSContainer.style.display = "none";
+            sparksSContainer.style.display = "none";
         } else {
             noiseIntenseSContainer.style.display = "none";
         }
@@ -133,11 +148,13 @@ document.addEventListener("DOMContentLoaded", () => {
             exposureC.checked = false;
             noiseIntenseC.checked = false;
             shadowsC.checked = false;
+            sparksC.checked = false;
 
             exposureSContainer.style.display = "none";
             noiseIntenseSContainer.style.display = "none";
             highlightsSContainer.style.display = "inline-block";
             shadowsSContainer.style.display = "none";
+            sparksSContainer.style.display = "none";
         } else {
             highlightsSContainer.style.display = "none";
         }
@@ -149,13 +166,33 @@ document.addEventListener("DOMContentLoaded", () => {
             exposureC.checked = false;
             noiseIntenseC.checked = false;
             highlightsC.checked = false;
+            sparksC.checked = false;
 
             exposureSContainer.style.display = "none";
             noiseIntenseSContainer.style.display = "none";
             highlightsSContainer.style.display = "none";
             shadowsSContainer.style.display = "inline-block";
+            sparksSContainer.style.display = "none";
         } else {
             shadowsSContainer.style.display = "none";
+        }
+    });
+
+    sparksC.addEventListener('change', function() {
+        if (this.checked) {
+            console.log("Sparks Checkbox is checked..");
+            exposureC.checked = false;
+            noiseIntenseC.checked = false;
+            highlightsC.checked = false;
+            shadowsC.checked = false;
+
+            exposureSContainer.style.display = "none";
+            noiseIntenseSContainer.style.display = "none";
+            highlightsSContainer.style.display = "none";
+            shadowsSContainer.style.display = "none";
+            sparksSContainer.style.display = "inline-block";
+        } else {
+            sparksSContainer.style.display = "none";
         }
     });
 });
@@ -166,7 +203,7 @@ document.addEventListener("DOMContentLoaded", () => {
  * Apply exposure filter to the uploaded image
  * @param {HTMLImageElement} imgElement 
  */
-async function render(originaElement, imgElement, exposureV, filter, preset, noiseIntenseV, highlightsV, shadowsV) {
+async function render(originaElement, imgElement, exposureV, filter, preset, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV) {
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
@@ -178,6 +215,9 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
 
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
+        const sparkIntenseLimit = 10000;
+        const sparkLength = 100;
+
         //console.log(data);
 
         switch(preset){
@@ -196,13 +236,12 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
 
         if (window.Worker) {
             console.time("test1");
-            var x = await renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV);
-            data = flattenUint8ClampedArrays(x);
+            var x = await renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV);
             console.timeEnd("test1");
+            data = flattenUint8ClampedArrays(x);
 
         } else {
             console.log("Your browser doesn't support web workers.");
-            console.time("test2");
              // Filters
             switch (filter){
                 case "BN":
@@ -248,6 +287,105 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
 
             // render
             for (let i = 0; i < data.length; i += 4) {
+
+                // sparks
+                if (sparksIntenseV != 0 && Math.floor(Math.random() * sparkIntenseLimit) < sparksIntenseV){
+                    if (Math.round(Math.random()) == 0){
+                        // Dots
+                        let index = i;
+                        let last = 4;
+                        for (var j=0; j<Math.floor(Math.random() * sparkLength); j++){
+                            if (index <= data.length){
+                                path = generateDirection();
+                                data[index] = 255;
+                                data[index+1] = 255;
+                                data[index+2] = 255;
+                                
+                                if (path == 0){
+                                    //Up
+                                    if (last == 1){
+                                        index -= 4*canvas.width;
+                                        path = last;
+                                    } else {
+                                        index += 4*canvas.width;
+                                    }
+
+                                } else if (path == 1){
+                                    //Down
+                                    if (last == 0){
+                                        index += 4*canvas.width;
+                                        path = last;
+                                    } else {
+                                        index -= 4*canvas.width;
+                                    }
+
+                                } else if (path == 2){
+                                    //Left
+                                    if (last == 3){
+                                        index += 4;
+                                        path = last;
+                                    } else {
+                                        index -= 4;
+                                    }
+
+                                }else if (path == 3){
+                                    //Rigth
+                                    if (last == 2){
+                                        index -= 4;
+                                        path = last;
+                                    } else {
+                                        index += 4;
+                                    }
+                                }
+                                last = path;
+                            }
+                        }
+                    } else{
+                        // Dots
+                        let index = i;
+                        let last = 4;
+                        dir = Math.round(Math.random());
+                        dirSide = Math.round(Math.random());
+                        for (var j=0; j<Math.floor(Math.random() * (sparkLength/2)); j++){
+                            if (Math.floor(Math.random() * 50) == 1){
+                                dir = Math.round(Math.random());
+                            }
+                            if (index <= data.length){
+                                path = generateDirection();
+                                data[index] = 255;
+                                data[index+1] = 255;
+                                data[index+2] = 255;
+                                if (dir == 0){
+                                    // UP
+                                    index += 4*canvas.width;
+                                } else {
+                                    // Down
+                                    index -= 4*canvas.width;
+                                }   
+                                
+                                if (path == dirSide == 1){
+                                    //Left
+                                    index -= 4;
+
+                                }else if (path == dirSide == 0){
+                                    //Rigth
+                                    index += 4;
+                                }else if (path == 2 && dir == 0){
+                                    //Up
+                                    index += 4*canvas.width;
+
+                                }else if (path == 3 && dir == 1){
+                                    //Down
+                                    index -= 4*canvas.width;
+                                }
+
+
+                                last = path;
+                            }
+                        }
+                    }
+                }
+
                 let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
 
                 data[i] = data[i] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
@@ -255,7 +393,6 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
                 data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
                 
             }
-            console.timeEnd("test2");
 
         }
 
@@ -312,12 +449,12 @@ function joinUint8ClampedArrays(arr1, arr2) {
     return combined;
 }
 
-async function renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV) {
+async function renderWithWorkers(data, exposureV, filter, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV) {
     //const segmentsPerWorker = Math.round(data.length / 4);
     const chunks = splitin4Uint8ClampedArray(data);
 
     // let each worker handle it's own part
-    const promises = chunks.map(c => renderwithworkers([c, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]));
+    const promises = chunks.map(c => renderwithworkers([c, exposureV, filter, noiseIntenseV, highlightsV, shadowsV, sparksIntenseV]));
 
     const segmentsResults = await Promise.all(promises);
     return segmentsResults.reduce((acc, arr) => acc.concat(arr), [],);
@@ -349,3 +486,7 @@ const flattenUint8ClampedArrays = (x) => {
 
     return data;
 };
+
+function generateDirection(){
+    return Math.floor(Math.random()*4);
+}
