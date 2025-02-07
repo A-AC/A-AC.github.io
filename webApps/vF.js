@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.getElementById("fileInput");
     const photo = document.getElementById("photo");
@@ -312,8 +314,6 @@ function joinUint8ClampedArrays(arr1, arr2) {
 }
 
 async function renderWithWorkers(data) {
-    const _ = require("lodash");
-
     const segmentsPerWorker = Math.round(data.length / 4);
     const chunks = _.chunk(data, segmentsPerWorker);
 
