@@ -117,6 +117,9 @@
     <script>
         var slider = new KeenSlider("#settings", {
         breakpoints: {
+            "(min-width: 350px)": {
+            slides: { perView: 3, spacing: 10 },
+            },
             "(min-width: 390px)": {
             slides: { perView: 3, spacing: 15 },
             },

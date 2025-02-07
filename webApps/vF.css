@@ -46,7 +46,7 @@ input {
 
 #settings{
     position: fixed;
-    top: 70%;
+    top: 70vh;
     right: 0px;
     left: 0px;
     text-align: center;
