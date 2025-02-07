@@ -176,7 +176,9 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
 
         if (window.Worker) {
 
-            data = await renderWithWorkers(data);
+            var x = await renderWithWorkers(data);
+            console.log("x",x);
+            data = x;
 
             /*const myWorker1 = new Worker("renderWorker.js");
             const myWorker2 = new Worker("renderWorker.js");
@@ -330,7 +332,7 @@ async function renderWithWorkers(data) {
     const promises = chunks.map(c => renderwithworkers(c));
 
     const segmentsResults = await Promise.all(promises);
-    return segmentsResults.reduce((acc, arr) => acc.concat(arr), []);
+    return segmentsResults.reduce((acc, arr) => acc.concat(arr), [],);
 
 }
 
