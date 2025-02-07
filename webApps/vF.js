@@ -177,7 +177,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         if (window.Worker) {
 
             var x = await renderWithWorkers(data);
-            data = x.reduce((acc, arr) => acc.concat(arr), [],);;
+            data = flattenUint8ClampedArrays(x);
 
             /*const myWorker1 = new Worker("renderWorker.js");
             const myWorker2 = new Worker("renderWorker.js");
@@ -346,4 +346,17 @@ const renderwithworkers = arr => {
         // post a message to the worker
         worker.postMessage(arr);
     });
+};
+
+const flattenUint8ClampedArrays = (x) => {
+    let totalLength = x.reduce((sum, arr) => sum + arr.length, 0);
+    let data = new Uint8ClampedArray(totalLength);
+    let offset = 0;
+
+    for (let arr of x) {
+        data.set(arr, offset);
+        offset += arr.length;
+    }
+
+    return data;
 };
