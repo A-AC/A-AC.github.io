@@ -1,6 +1,3 @@
-const myWorker1 = new Worker("renderWorker.js");
-const myWorker2 = new Worker("renderWorker.js");
-
 document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.getElementById("fileInput");
     const photo = document.getElementById("photo");
@@ -180,6 +177,8 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         let data = imageData.data;
 
         if (window.Worker) {
+            const myWorker1 = new Worker("renderWorker.js");
+            const myWorker2 = new Worker("renderWorker.js");
             let [firstHalf, secondHalf] = splitUint8ClampedArray(data, data.length / 2);
             var arr1;
             var arr2;
