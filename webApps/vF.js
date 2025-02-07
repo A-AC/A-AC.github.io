@@ -48,7 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
             photo.onload = async () => {
                     if (!isFilterApplied) {
                         console.log("Image loaded");
+                        console.time("Execution Time");
                         await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
+                        console.timeEnd("Execution Time");
                       isFilterApplied = true;  // Mark the filter as applied
                     }
             };
@@ -62,8 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     filterC.addEventListener("change", async (event)=>{
-        
-
         await render(originalPh, photo, exposureS.value, filterC.value, noiseIntenseS.value, highlightsS.value, shadowsS.value);
 
     });
@@ -164,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
  * @param {HTMLImageElement} imgElement 
  */
 async function render(originaElement, imgElement, exposureV, filter, noiseIntenseV, highlightsV, shadowsV) {
-    console.log("Mod Exposure");
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
@@ -177,65 +176,105 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
 
-        // Filters
-        switch (filter){
-            case "BN":
-                for (let i = 0; i < data.length; i += 4) {
-                    let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-                    data[i] = data[i + 1] = data[i + 2] = avg;
-                }
-                break;
+        let [firstHalf, secondHalf] = splitUint8ClampedArray(data, data.length / 2);
 
-            case "red":
-                for (let i = 0; i < data.length; i += 4) {
-                    data[i + 1] = data[i + 2] = 0;
-                }
-                break;
+        if (window.Worker) {
+            const myWorker1 = new Worker("renderWorker.js");
+            const myWorker2 = new Worker("renderWorker.js");
+            let arr1;
+            let arr2;
 
-            case "blue":
-                for (let i = 0; i < data.length; i += 4) {
-                    data[i] = data[i + 1] = 0;
-                }
-                break;
+            [firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV].forEach((input) => {
+                input.onchange = () => {
+                myWorker1.postMessage([firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]);
+                console.log("Message posted to renderworker1");
+                };
+            });
 
-            case "green":
-                for (let i = 0; i < data.length; i += 4) {
-                    data[i] = data[i + 2] = 0;
-                }
-                break;
+            [secondHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV].forEach((input) => {
+                input.onchange = () => {
+                myWorker2.postMessage([secondHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]);
+                console.log("Message posted to renderworker2");
+                };
+            });
 
-            case "noise":
-                noiseIntenseV = 100;
-                noiseIntenseS.value = 100;
-                exposureV = 10;
-                exposureS.value = 10;
-                break;
+            myWorker1.onmessage = (e) => {
+                arr1 = e.data;
+                console.log("Message received from renderworker1");
+            };
 
-            case "crazy":
-                for (let i = 0; i < data.length; i += 4) {
-                    if (data[i] > data[i+1] && data[i] > data[i+2]){
+            myWorker2.onmessage = (e) => {
+                arr2 = e.data;
+                console.log("Message received from renderworker2");
+            };
+
+            data = joinUint8ClampedArrays(arr1, arr2);
+
+        } else {
+            console.log("Your browser doesn't support web workers.");
+             // Filters
+            switch (filter){
+                case "BN":
+                    for (let i = 0; i < data.length; i += 4) {
+                        let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                        data[i] = data[i + 1] = data[i + 2] = avg;
+                    }
+                    break;
+
+                case "red":
+                    for (let i = 0; i < data.length; i += 4) {
                         data[i + 1] = data[i + 2] = 0;
-                    } else if (data[i+1] > data[i] && data[i+1] > data[i+2]){
-                        data[i] = data[i + 2] = 0;
-                    } else if (data[i+2] > data[i] && data[i+2] > data[i+1]){
+                    }
+                    break;
+
+                case "blue":
+                    for (let i = 0; i < data.length; i += 4) {
                         data[i] = data[i + 1] = 0;
                     }
-                }
-                break;
+                    break;
 
-            default:
-                data = imageData.data;
+                case "green":
+                    for (let i = 0; i < data.length; i += 4) {
+                        data[i] = data[i + 2] = 0;
+                    }
+                    break;
+
+                case "noise":
+                    noiseIntenseV = 100;
+                    noiseIntenseS.value = 100;
+                    exposureV = 10;
+                    exposureS.value = 10;
+                    break;
+
+                case "crazy":
+                    for (let i = 0; i < data.length; i += 4) {
+                        if (data[i] > data[i+1] && data[i] > data[i+2]){
+                            data[i + 1] = data[i + 2] = 0;
+                        } else if (data[i+1] > data[i] && data[i+1] > data[i+2]){
+                            data[i] = data[i + 2] = 0;
+                        } else if (data[i+2] > data[i] && data[i+2] > data[i+1]){
+                            data[i] = data[i + 1] = 0;
+                        }
+                    }
+                    break;
+
+                default:
+                    data = imageData.data;
+            }
+
+            // render
+            for (let i = 0; i < data.length; i += 4) {
+                let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+
+                data[i] = data[i] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
+                data[i+1] = data[i+1] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
+                data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
+                
+            }
+
         }
 
-        // render
-        for (let i = 0; i < data.length; i += 4) {
-            let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-
-            data[i] = data[i] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
-            data[i+1] = data[i+1] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
-            data[i+2] = data[i+2] - (-exposureV - (Math.floor(Math.random() * noiseIntenseV) - noiseIntenseV/2) - highlightsCurve(avg, highlightsV) - shadowCurve(avg, shadowsV));
-            
-        }
+        
         //console.log(data);
 
         ctx.putImageData(imageData, 0, 0);
@@ -256,6 +295,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
             }
         }, "image/jpeg");
     }
+    
 }
 
 function shadowCurve(x, b){
@@ -263,4 +303,17 @@ function shadowCurve(x, b){
 }
 function highlightsCurve(x, b){
     return Math.floor(b*1/(Math.sqrt(2.0*3.14))*Math.exp(-(1/2)*((x-255)/64)*((x-255)/64)));
+}
+
+function splitUint8ClampedArray(arr, index) {
+    const firstPart = arr.slice(0, index);
+    const secondPart = arr.slice(index);
+    return [firstPart, secondPart];
+}
+
+function joinUint8ClampedArrays(arr1, arr2) {
+    const combined = new Uint8ClampedArray(arr1.length + arr2.length);
+    combined.set(arr1, 0);
+    combined.set(arr2, arr1.length);
+    return combined;
 }
