@@ -8,6 +8,12 @@ onmessage = (e) => {
     const noiseIntenseS = e.data[3];
     const highlightsS = e.data[4];
     const shadowsS = e.data[5];
+
+    console.log("e:",exposureS);
+    console.log("f:",filter);
+    console.log("n:",noiseIntenseS);
+    console.log("h:",highlightsS);
+    console.log("s:",shadowsS);
     
 
 
