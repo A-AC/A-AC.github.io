@@ -178,7 +178,7 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         if (window.Worker) {
 
             var x = await renderWithWorkers(data);
-            data = await flattenUint8ClampedArrays(x);
+            data = flattenUint8ClampedArrays(x);
 
         } else {
             console.log("Your browser doesn't support web workers.");
@@ -244,10 +244,9 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
 
         }
 
-        imageData.data = data;
-
         console.log("msg in main:",data);
 
+        imageData.data.set(data);
         
         //console.log(data);
 
