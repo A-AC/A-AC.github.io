@@ -273,8 +273,9 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
 
         
         //console.log(data);
+        imageData.data = data;
 
-        ctx.putImageData(data, 0, 0);
+        ctx.putImageData(imageData, 0, 0);
 
         // Convert canvas to Blob and create Object URL
         canvas.toBlob((blob) => {
