@@ -8,7 +8,6 @@ onmessage = (e) => {
     const noiseIntenseV = e[3]
     const highlightsV = e[4]
     const shadowsV = e[5]
-    console.log(typeof data)
     // Filters
     switch (filter){
         case "BN":

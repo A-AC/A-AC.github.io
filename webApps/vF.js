@@ -181,8 +181,8 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         if (window.Worker) {
             const myWorker1 = new Worker("renderWorker.js");
             const myWorker2 = new Worker("renderWorker.js");
-            let arr1;
-            let arr2;
+            var arr1;
+            var arr2;
 
             myWorker1.postMessage([firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]);
             console.log("Message posted to renderworker1");
@@ -191,12 +191,13 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
             console.log("Message posted to renderworker2");
 
             myWorker1.onmessage = (e) => {
-                arr1 = e;
+                console.log(e.data)
+                arr1 = e.data;
                 console.log("Message received from renderworker1");
             };
 
             myWorker2.onmessage = (e) => {
-                arr2 = e;
+                arr2 = e.data;
                 console.log("Message received from renderworker2");
             };
 
