@@ -1,5 +1,3 @@
-import _ from '/webApps/lodash.js'
-
 document.addEventListener("DOMContentLoaded", () => {
     const fileInput = document.getElementById("fileInput");
     const photo = document.getElementById("photo");
@@ -300,10 +298,19 @@ function highlightsCurve(x, b){
     return Math.floor(b*1/(Math.sqrt(2.0*3.14))*Math.exp(-(1/2)*((x-255)/64)*((x-255)/64)));
 }
 
-function splitUint8ClampedArray(arr, index) {
-    const firstPart = arr.slice(0, index);
-    const secondPart = arr.slice(index);
-    return [firstPart, secondPart];
+function splitin4Uint8ClampedArray(arr) {
+    var d = arr.length/4;
+
+    index0 = d;
+    index1 = d*2
+    index2 = d*3
+
+    const firstPart = arr.slice(0, index0);
+    const secondPart = arr.slice(index0, index1);
+    const thirdPart = arr.slice(index1, index2);
+    const fourthPart = arr.slice(index2);
+
+    return [firstPart, secondPart, thirdPart, fourthPart];
 }
 
 function joinUint8ClampedArrays(arr1, arr2) {
@@ -314,8 +321,8 @@ function joinUint8ClampedArrays(arr1, arr2) {
 }
 
 async function renderWithWorkers(data) {
-    const segmentsPerWorker = Math.round(data.length / 4);
-    const chunks = _.chunk(data, segmentsPerWorker);
+    //const segmentsPerWorker = Math.round(data.length / 4);
+    const chunks = splitin4Uint8ClampedArray(data);
 
     // let each worker handle it's own part
     const promises = chunks.map(c => renderwithworkers(c));
