@@ -184,19 +184,11 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
             let arr1;
             let arr2;
 
-            [firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV].forEach((input) => {
-                input.onchange = () => {
-                myWorker1.postMessage([firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]);
-                console.log("Message posted to renderworker1");
-                };
-            });
-
-            [secondHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV].forEach((input) => {
-                input.onchange = () => {
-                myWorker2.postMessage([secondHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]);
-                console.log("Message posted to renderworker2");
-                };
-            });
+            myWorker1.postMessage([firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]);
+            console.log("Message posted to renderworker1");
+            
+            myWorker2.postMessage([secondHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]);
+            console.log("Message posted to renderworker2");
 
             myWorker1.onmessage = (e) => {
                 arr1 = e.data;
