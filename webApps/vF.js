@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const highlightsSV = document.getElementById("highlightsSV");
     const shadowsSV = document.getElementById("shadowsSV");
 
+    const myWorker1 = new Worker("renderWorker.js");
+    const myWorker2 = new Worker("renderWorker.js");
+
 
     exposureSV.innerHTML = exposureS.value;
     noiseIntenseSV.innerHTML = noiseIntenseS.value;
@@ -176,11 +179,8 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
         let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         let data = imageData.data;
 
-        let [firstHalf, secondHalf] = splitUint8ClampedArray(data, data.length / 2);
-
         if (window.Worker) {
-            const myWorker1 = new Worker("renderWorker.js");
-            const myWorker2 = new Worker("renderWorker.js");
+            let [firstHalf, secondHalf] = splitUint8ClampedArray(data, data.length / 2);
             var arr1;
             var arr2;
 
@@ -200,9 +200,6 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
                 arr2 = e.data;
                 console.log("Message received from renderworker2");
             };
-
-            myWorker1.terminate();
-            myWorker2.terminate();
 
             data = joinUint8ClampedArrays(arr1, arr2);
 
