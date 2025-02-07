@@ -267,6 +267,8 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
 
         }
 
+        console.log("msg in main:",data);
+
         
         //console.log(data);
 

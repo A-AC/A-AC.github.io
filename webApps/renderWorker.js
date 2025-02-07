@@ -8,7 +8,9 @@ onmessage = (e) => {
     var filter = "";
 
     //[firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]
-    var data = e;
+    var data = e.data;
+    console.log("msg in worker:",data);
+    
 
     // Filters
     switch (filter){
