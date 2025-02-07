@@ -9,11 +9,11 @@ onmessage = (e) => {
     const highlightsS = e.data[4];
     const shadowsS = e.data[5];
 
-    console.log("e:",exposureS);
-    console.log("f:",filter);
-    console.log("n:",noiseIntenseS);
-    console.log("h:",highlightsS);
-    console.log("s:",shadowsS);
+    //console.log("e:",exposureS);
+    //console.log("f:",filter);
+    //console.log("n:",noiseIntenseS);
+    //console.log("h:",highlightsS);
+    //console.log("s:",shadowsS);
     
 
 
@@ -77,7 +77,7 @@ onmessage = (e) => {
         
     }
     console.log("Worker: Posting message back to main script");
-    console.log("Worker data:",data);
+    //console.log("Worker data:",data);
     postMessage(data);
     self.close();
 };
