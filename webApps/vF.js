@@ -191,12 +191,12 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
             console.log("Message posted to renderworker2");
 
             myWorker1.onmessage = (e) => {
-                arr1 = e.data;
+                arr1 = e;
                 console.log("Message received from renderworker1");
             };
 
             myWorker2.onmessage = (e) => {
-                arr2 = e.data;
+                arr2 = e;
                 console.log("Message received from renderworker2");
             };
 
