@@ -1,13 +1,12 @@
 onmessage = (e) => {
-    console.log("Worker: Message received from main script");
-
     //[firstHalf, exposureV, filter, noiseIntenseV, highlightsV, shadowsV]
     var data = e.data[0];
     const exposureS = e.data[1];
-    const noiseIntenseS = 100;
-    const highlightsS = 0;
-    const shadowsS = 0;
-    var filter = "red";
+    var filter = e.data[2];
+    const noiseIntenseS = e.data[3];
+    const highlightsS = e.data[4];
+    const shadowsS = e.data[5];
+    
 
 
     // Filters
@@ -69,7 +68,7 @@ onmessage = (e) => {
         data[i+2] = data[i+2] - (-exposureS - (Math.floor(Math.random() * noiseIntenseS) - noiseIntenseS/2) - highlightsCurve(avg, highlightsS) - shadowCurve(avg, shadowsS));
         
     }
-    console.log("Worker: Posting message back to main script");
+    //console.log("Worker: Posting message back to main script");
     postMessage(data);
     self.close();
 };
