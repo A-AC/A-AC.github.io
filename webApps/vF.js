@@ -180,31 +180,6 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
             var x = await renderWithWorkers(data);
             data = flattenUint8ClampedArrays(x);
 
-            /*const myWorker1 = new Worker("renderWorker.js");
-            const myWorker2 = new Worker("renderWorker.js");
-            let [firstHalf, secondHalf] = splitUint8ClampedArray(data, data.length / 2);
-            var arr1;
-            var arr2;
-
-            myWorker1.postMessage(firstHalf);
-            console.log("Message posted to renderworker1");
-            
-            myWorker2.postMessage(secondHalf);
-            console.log("Message posted to renderworker2");
-
-            myWorker1.onmessage = (e) => {
-                console.log(e.data)
-                arr1 = e.data;
-                console.log("Message received from renderworker1");
-            };
-
-            myWorker2.onmessage = (e) => {
-                arr2 = e.data;
-                console.log("Message received from renderworker2");
-            };
-
-            data = joinUint8ClampedArrays(arr1, arr2);*/
-
         } else {
             console.log("Your browser doesn't support web workers.");
              // Filters
@@ -268,6 +243,8 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
             }
 
         }
+
+        imageData.data = data;
 
         console.log("msg in main:",data);
 
