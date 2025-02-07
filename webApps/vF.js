@@ -346,7 +346,7 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
                         let last = 4;
                         dir = Math.round(Math.random());
                         dirSide = Math.round(Math.random());
-                        for (var j=0; j<Math.floor(Math.random() * (sparkLength/2)); j++){
+                        for (var j=0; j<Math.floor(Math.random() * (sparkLength)); j++){
                             if (Math.floor(Math.random() * 50) == 1){
                                 dir = Math.round(Math.random());
                             }
