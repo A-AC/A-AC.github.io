@@ -208,6 +208,9 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
                 console.log("Message received from renderworker2");
             };
 
+            myWorker1.terminate();
+            myWorker2.terminate();
+
             data = joinUint8ClampedArrays(arr1, arr2);
 
         } else {
