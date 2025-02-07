@@ -273,7 +273,6 @@ async function render(originaElement, imgElement, exposureV, filter, noiseIntens
 
         
         //console.log(data);
-        imageData.data = data;
 
         ctx.putImageData(imageData, 0, 0);
 
