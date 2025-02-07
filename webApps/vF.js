@@ -223,13 +223,30 @@ async function render(originaElement, imgElement, exposureV, filter, preset, noi
         switch(preset){
             case "noise":
                 noiseIntenseV = 100;
-                noiseIntenseS.value = 100;
+                noiseIntenseS.value = noiseIntenseV;
                 noiseIntenseSV.innerHTML = noiseIntenseS.value;
                 exposureV = 10;
-                exposureS.value = 10;
+                exposureS.value = exposureV;
                 exposureSV.innerHTML = exposureS.value;
-
                 break;
+
+                case "east":
+                    noiseIntenseV = 120;
+                    noiseIntenseS.value = noiseIntenseV;
+                    noiseIntenseSV.innerHTML = noiseIntenseS.value;
+                    exposureV = 10;
+                    exposureS.value = exposureV;
+                    exposureSV.innerHTML = exposureS.value;
+                    highlightsV = 40;
+                    highlightsS.value = highlightsV;
+                    highlightsSV.innerHTML = highlightsS.value;
+                    shadowsV = -40;
+                    shadowsS.value = shadowsV;
+                    shadowsSV.innerHTML = shadowsS.value;
+                    sparksIntenseV = 1;
+                    sparksS.value = sparksIntenseV;
+                    sparksSV.innerHTML = sparksS.value;
+                    break;
             default:
                 break;//Do nothing
         }
