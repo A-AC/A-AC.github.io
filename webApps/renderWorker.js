@@ -62,8 +62,8 @@ onmessage = (e) => {
             data = e.data[0];
     }
 
-    const sparkIntenseLimit = 10000;
-    const sparkLength = 300;
+    const sparkIntenseLimit = 100000;
+    const sparkLength = 3000;
     // render
     for (let i = 0; i < data.length; i += 4) {
         // sparks
